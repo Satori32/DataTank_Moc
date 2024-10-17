@@ -5,6 +5,7 @@ TankItem ConstructTankItem(const Any& T, const Any& M) {
 	TI.T = ConstructAny(T);
 	TI.M = ConstructAny(M);
 	TI.I = ConstructAny(0xdeadbeef);
+	TI.D = ConstructAny(0);
 
 	return TI;
 }
@@ -13,10 +14,16 @@ bool WrireI(TankItem& In, const Any& B) {
 	In.I = ConstructAny(B);
 	return true;
 }
+bool WrireD(TankItem& In, const Any& B) {
+	Free(In.D);
+	In.D = ConstructAny(B);
+	return true;
+}
 bool Free(TankItem& In) {
 	Free(In.T);
 	Free(In.M);
 	Free(In.I);
+	Free(In.D);
 
 	return true;
 }
@@ -33,6 +40,7 @@ bool Free(DataTank& In) {
 		Free(Index(In.V, i)->T);
 		Free(Index(In.V, i)->M);
 		Free(Index(In.V, i)->I);
+		Free(Index(In.V, i)->D);
 	}
 	Free(In.V);
 
